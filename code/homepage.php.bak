@@ -1,0 +1,526 @@
+
+<?php 
+$conn=mysqli_connect('8.209.73.211','root','123456','mydb');
+session_start();
+
+ if($_SERVER["REQUEST_METHOD"] == "POST") {
+      $user=$_SESSION['user'];
+      $answer = mysqli_real_escape_string($conn,$_POST['answer']);
+      $result=mysqli_query($conn,"insert into wronganswer(answer,administratorID,uniQuestionID,user)
+        values('$answer','000000','1','$user')");
+ }
+      
+ ?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>dash board</title>
+        <link rel="icon" type="image/x-icon" href="drops.png">
+        <style type="text/css">
+            .divForm{
+            position: relative;
+            width: 400px;
+            height: 200px;
+            top: 30px;
+            left: 40px;
+            }
+            </style>
+            <style type="text/css">
+            .contenttwo{ 
+                margin:0 auto;
+                position:absolute;
+                left: 310px;
+                top: 120px;
+                width: 1150px;
+                height: 640px;
+            }
+            .lanmusi{ 
+                background:#fff;
+                width:600px; 
+                height:350px; 
+                float:left;
+                position:absolute;
+                top:150px;
+                border: 4px solid #fff;
+                /*设置四个角*/
+                border-radius: 20px;
+            }
+            .lanmuheadsi{ 
+                background:#ffffff; 
+                border-bottom:2px solid #8590a6; margin:0 20 0 0;
+                width:600px;
+                height:30px;
+                border-radius: 20px 20px 0px 0px;
+
+            }
+            .lanmunamesi{ 
+                width:440px;
+                height:30px; 
+                float:left ;
+                padding-top: 5px;
+            }
+            .lanmumoresi{ 
+                width:40px;
+                height:30px; 
+                float:right;
+            }
+            .namesi{ 
+                text-align:left; 
+                color:#8590a6; 
+                font-size:18px; 
+                margin:0 0 0 10;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            .moresi{ 
+                text-align:right; 
+                color:#8590a6; 
+                font-size:18px; 
+                margin:0 0 0 170;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            /*栏目五*/
+            .lanmuwu{ 
+                background:#fff; 
+                width:450px; 
+                height:490px; 
+                float:left;
+                border: 4px solid #fff;
+                border-radius: 20px;
+                margin:0 0 0 0;
+                position:absolute;
+                left: 650px;
+                top:10px;
+            }
+            .lanmuheadwu{ 
+                background:#fff; 
+                width:450px;
+                height:30px;
+                border-bottom:2px solid #8590a6; margin:0 20 0 0;
+                border-radius: 20px 20px 0px 0px;
+            }
+            .lanmunamewu{ 
+                width:400px;
+                height:30px; 
+                float:left;
+                padding-top: 5px;
+            }
+            .lanmumorewu{ 
+                width:40px;
+                height:30px; 
+                float:right;
+            }
+            .namewu{ 
+                text-align:left; 
+                color:#8590a6; 
+                font-size:18px; 
+                margin:0 0 0 10;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            .morewu{ 
+                text-align:right; 
+                color:#8590a6; 
+                font-size:18px; 
+                margin:0 0 0 170;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            </style>
+            <style type="text/css">
+              *{
+                padding: 0;
+                margin: 0;
+            }
+            html,body{
+                height: 100%;
+            }
+            .wrap{
+                position:absolute;
+                width: 260px;
+                height:840px;
+                background-color: #1F2935;
+            }
+            .wrap1{
+                position:absolute;
+                width:1480px;
+                height: 55px;
+                background-color:white;
+            }
+            .wrap2{
+                    position:absolute;
+                    left: 310px;
+                    top: 170px;
+                    width: 1150px;
+                    height: 640px;
+                    border:2px solid #FF9900; margin:0 20 0 0;
+                }
+            .header{
+                width: 100%;
+                height: 65px;
+                background-color: #1F2935;
+                font-weight:bolder;
+                font-size: 30px;
+                color: #3399ff;
+                text-align: center;
+                line-height: 65px;
+                font-family:Arial,Verdana,Sans-serif
+                wordwrap:break-word;
+            }
+            .nav{
+                width:250px;
+                margin: 10px 5px 0;
+            }
+            .list{
+                margin-bottom: 5px;
+            }
+            .list h2{
+                position: relative;
+                padding: 15px 0;
+                background-color: #1F2935;
+                margin-left: 20px;
+                font-size: 16px;
+                color: #fff;
+                transition: .5s;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            .list1 h2{
+                position: relative;
+                padding: 20px 0;
+                background-color: #1F2935;
+                margin-left: 20px;
+                font-size: 16px;
+                color: #fff;
+                transition: .5s;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            .list h2.on{
+                background-color: #161D26;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            .list i{
+                position: absolute;
+                right: 30px;
+                height:1px;
+                top: 35%;
+                border: 8px solid transparent;
+                border-left-color: #fff;/*triangle*/
+                transform:rotate(0deg);
+                transform-origin: 1px 8px;
+                transition: .5s;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            .list i.on{
+                transform:rotate(90deg);
+                font-family:Arial,Verdana,Sans-serif
+                
+            }
+            .hide{
+                overflow: hidden;
+                height: 0;
+                transition: .5s;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            .hide h5{
+                padding: 4px 0;
+                background-color: #161D26;
+                margin-left: 25px;
+                font-size:14px;
+                color:#fff;
+                border-bottom:#42495d;
+                font-family:Arial,Verdana,Sans-serif
+            }
+            
+            .white{
+                text-decoration: none;
+                color:white;
+            }
+            .gray{
+                
+                color:#A4D3EE;
+            }
+            .black{
+                text-decoration: none;
+                color:black;
+            }
+            .grey {
+            text-decoration: none;
+            color: rgb(177, 174, 174);
+            }
+            </style>
+             <style>
+                body{background-color:#DBE7EE}
+            </style>
+            <style>
+                .button {
+                 width:80px;
+                 text-align:center;
+                 line-height:100%;
+                 padding:0.3em;
+                 font:16px;
+                 font-style:normal;
+                 text-decoration:none;
+                 margin:2px;
+                 vertical-align:text-bottom;
+                 zoom:1;
+                 outline:none;
+                 font-size-adjust:none;
+                 font-stretch:normal;
+                 border-radius:50px;
+                 box-shadow:0px 1px 2px rgba(0,0,0,0.2);
+                 text-shadow:0px 1px 1px rgba(0,0,0,0.3);
+                 color:rgb(82, 80, 80);
+                 border:0.2px solid whitesmoke;
+                 background-repeat:repeat;
+                 background-size:auto;
+                 background-origin:padding-box;
+                 background-clip:padding-box;
+                 background-color:whitesmoke;
+                 background: linear-gradient(to bottom, #eeeff9 0%,#DBE7EE 100%);
+            }  
+            .button:hover {
+                background:burlywood;
+            }
+            </style>
+            <style>
+            .sansserif{font-family:Arial,Verdana,Sans-serif}
+            </style>
+            <!-- 引入 ECharts 文件 -->
+            <script src="echarts.min.js"></script>
+    </head>
+    <body>
+        
+        
+        <!-- 
+       <p style="position:absolute; left:305px; top:80px; font-size: x-large; width: 300px;" class="sansserif"><b>Upload question</b></p>
+       <a href="schoolpage.php"><img alt="h" src="house1.png" width="30px" height="30px" style="position:absolute; left:300px; top:112px;"></a>
+       <div style="position:absolute; left:335px; top:125px;width:400px">
+        
+        <?php
+           $user=$_SESSION['user'];
+         echo" <p class='sansserif'>> ".$user." > Questions</p>";
+        ?>
+        </div>
+       <img alt="h" src="1.png" width="30px" height="30px" style="position:absolute; left:1120px; top:120px; " onclick="msg4()" >
+       <img alt="h" src="2.png" width="30px" height="30px" style="position:absolute; left:1155px; top:120px; " onclick="msg1()" > 
+        -->
+
+       <!-- navigation bar -->
+       <div class="wrap1"></div>
+       <p style="position:absolute; left:300px; top:20px; color:gray;" class="sansserif">Welcome to Drops!</p>
+        <img alt="h" src="8.png" width="30px" height="30px" style="position:absolute; left:1100px; top:10px; " onclick="msg2()" ></a>
+       <img alt="h" src="9.png" width="30px" height="30px" style="position:absolute; left:1140px; top:10px; " onclick="msg3()" ></a>
+       <!-- url换成hompage -->
+       <a href="homepage.php"><img alt="h" src="10.png" width="48px" height="48px" style="position:absolute; left:1180px; top:4px; "></a>
+       <div class="wrap">
+        <!-- wj -->
+       <?php
+           $user=$_SESSION['user'];
+         echo" <div class='header'>".$user."</div>";
+        ?>
+            <div class="nav">
+                <ul>
+                    <li class="list1"> 
+                        <!-- url换成hompage -->
+                        <h2  class="sansserif"><i></i><a href="homepage.php"target="_blank" class="white">
+                            <img alt="h" src="6.png" width="24px" height="24px"> DASHBOARD</a></h2>
+                    </li>
+                    <li class="list">
+                        <h2 class="sansserif"><i></i><img alt="h" src="11.png" width="24px" height="24px">  QUESTIONS</h2>
+                        <div class="hide">
+                        <h5><a href="mypage.php" class="grey"><img alt="h" src="14.png" width="16px" height="16px"> SELF QUESTIONS</a></h5>
+                        <h5><a href="schoolpage.php" class="grey"><img alt="h" src="14.png" width="16px" height="16px"> UNIVERSITY QUESTIONS</a></h5>
+                        <h5><a href="bookmark.php" class="grey"><img alt="h" src="14.png" width="16px" height="16px"> BOOKMARK QUESTIONS</a></h5>
+                        <h5><a href="upload.php" class="grey"><img alt="h" src="14.png" width="16px" height="16px"> UPLOAD QUESTIONS</a></h5>
+                    </div>
+                    </li>
+                    <li class="list1">
+                        <h2 class="sansserif"><i></i><a href="calendar.php" class="white">
+                            <img alt="h" src="3.png" width="25px" height="25px"> CALENDAR</a></h2>
+                    </li>
+                    <li class="list1">
+                        <h2 class="sansserif"><i></i><a href="contact.php" class="white">
+                            <img alt="h" src="4.png" width="24px" height="24px"> CONTACTS</a></h2>
+                    </li>
+                    <li class="list1">
+                        <h2 class="sansserif"><i></i><a href="homepage.php"target="_blank" class="white">
+                            <img alt="h" src="5.png" width="24px" height="24px"> FILE MANAGER</a></h2>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+            (function () {
+                var oList = document.querySelectorAll('.list h2'),
+                    oHide = document.querySelectorAll('.hide'),
+                    oIcon = document.querySelectorAll('.list i'),
+                    lastIndex = 0;
+                for(var i=0;i<oList.length;i++){
+                    oList[i].index = i;
+                    oList[i].isClick = false;
+                    oList[i].initHeight = oHide[i].clientHeight;
+                    oHide[i].style.height = '0';
+                    oList[i].onclick = function () {
+                        if(this.isClick){
+                            oHide[this.index].style.height = '0';
+                            oIcon[this.index].className = '';
+                            oList[this.index].className = '';
+                            oList[this.index].isClick = false;
+                        }
+                        else{
+                            oHide[lastIndex].style.height = '0';
+                            oIcon[lastIndex].className = '';
+                            oList[lastIndex].className = '';
+                            oHide[this.index].style.height = '110px';
+                            oIcon[this.index].className = 'on';
+                            oList[this.index].className = 'on';
+                            oList[lastIndex].isClick = false;
+                            oList[this.index].isClick = true;
+                            lastIndex = this.index;
+                        }
+                    }
+                }
+            })();
+        </script>
+        <!-- navigation bar end -->
+        
+        
+        
+            <div class="contenttwo">
+                <p style="position:absolute; left:150px; top:20px; color:#A4D3EE; font-size: 25px" class="sansserif">How to use the website?</p>
+                <p style="position:absolute; left:150px; top:50px; color:#A4D3EE; font-size: 25px"  class="sansserif" > Consult the <a href="usermanual.html" class="gray" > USER MANUAL </a></p>
+                <img alt="h" src="drops.png" width="125px" height="125px" style="position:absolute;   "  ></a>
+                <!--栏目四开始-->
+                <div class="lanmusi">
+                    <div class="lanmuheadsi">
+                        <div class="lanmunamesi"><span class="namesi">&nbsp&nbsp Number of questions I did in the past week </span></div>
+                    </div><!--栏目头部-->
+                    <div class="lanmucontent" id="main" style="width: 600px;height:320px;"></div><!--栏目内容-->
+                    <script type="text/javascript">
+                        // 基于准备好的dom，初始化echarts实例
+                        var myChart = echarts.init(document.getElementById('main'));
+                        // 指定图表的配置项和数据
+
+                        var option = {
+                            legend: {},
+                            tooltip: {},
+                            dataset: {
+                                source: [
+                                    ['total number', 'Right answer number', 'Wrong answer number'],
+                                    // wj！插数据库！
+                                    // 格式是 日期 那天的right answer，那天的wrong answer
+                                    ['MON', 43.3, 85.8],
+                                    ['TUE', 83.1, 73.4],
+                                    ['WED', 86.4, 65.2],
+                                    ['THU', 72.4, 53.9],
+                                    ['FRI', 43.3, 85.8],
+                                    ['SAT', 83.1, 73.4],
+                                    ['SUN', 86.4, 65.2]
+                                ]
+                            },
+                            xAxis: {type: 'category'},
+                            yAxis: {},
+                            // Declare several bar series, each will be mapped
+                            // to a column of dataset.source by default.
+                            series: [
+                                {type: 'bar'},
+                                {type: 'bar'}
+                            ]
+                        };
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
+                         </script>
+                </div>
+
+                <!--栏目四结束-->
+                <!--栏目五开始-->
+                <div class="lanmuwu">
+                    <div class="lanmuheadwu">
+                        <div class="lanmunamewu"><span class="namewu">&nbsp&nbsp Rate of accuarcy</span></div><!--栏目名-->
+                    </div><!--栏目头部-->
+                    <div class="lanmucontent" id="path" style="width: 450px;height:470px;"></div><!--栏目内容-->
+                    <script type="text/javascript">
+                        // 基于准备好的dom，初始化echarts实例
+                        var myChart = echarts.init(document.getElementById('path'));
+                        // 指定图表的配置项和数据
+                        // wj!导数据！
+                        data = [["2000-06-05",19],["2000-06-06",29],["2000-06-07",35],["2000-06-08",86],["2000-06-09",73],["2000-06-10",85],["2000-06-11",73],["2000-06-12",68],["2000-06-13",92],["2000-06-14",30],["2000-06-15",45],["2000-06-16",39],["2000-06-17",15],["2000-06-18",11],["2000-06-19",39],["2000-06-20",20],["2000-06-21",37],["2000-06-22",28],["2000-06-23",85],["2000-06-24",94],["2000-06-25",71],["2000-06-26",16],["2000-06-27",84],["2000-06-28",93],["2000-06-29",85],["2000-06-30",73],["2000-07-01",83],["2000-07-02",25],["2000-07-03",17],["2000-07-04",82],["2000-07-05",44],["2000-07-06",72],["2000-07-07",16],["2000-07-08",17],["2000-07-09",66],["2000-07-10",91],["2000-07-11",92],["2000-07-12",13],["2000-07-13",17],["2000-07-14",31],["2000-07-15",51],["2000-07-16",64],["2000-07-17",69],["2000-07-18",88],["2000-07-19",77],["2000-07-20",83],["2000-07-21",91],["2000-07-22",57],["2000-07-23",55],["2000-07-24",60]];
+
+                        var dateList = data.map(function (item) {
+                            return item[0];
+                        });
+                        var valueList = data.map(function (item) {
+                            return item[1];
+                        });
+                        var option = {
+                            legend: {},
+                            tooltip: {
+                                show : true,
+                                trigger: 'axis',
+                                formatter: '{b0}<br/>{a0}: {c0}%'
+                            },
+                            xAxis: {data: dateList},
+                            yAxis: {
+                                splitLine: {show: false},
+                                type: 'value',
+                                axisLabel: {
+                                    formatter: '{value}%'
+                                }
+                            },
+                            series: [
+                                {
+                                    type: 'line',
+                                    showSymbol: false,
+                                    data: valueList
+                                }]
+                        };
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
+                         </script>
+                </div>
+                <!--栏目五结束-->
+            </div>
+            
+            <!--wj 改action名 -->
+            <!-- 
+        <form action="rate.php" method="post" autocomplete="off" class="sansserif">
+            Title of the question：<br><br><textarea name="qName" rows="2" cols="130" style="resize: none;" autofocus required maxlength=300 ></textarea><br><br>
+            Content of the question：<br><br><textarea name="qTent" rows="3" cols="130" style="resize: none;" autofocus required maxlength=400></textarea><br><br>
+            Correct answer of the question：<br><br><textarea name="qAnswerC" rows="3" cols="130" style="resize: none;" autofocus required maxlength=200></textarea><br><br>
+            Wrong answer of the question：<br><br><textarea name="qAnswerW" rows="3" cols="130" style="resize: none;" autofocus required maxlength=200></textarea><br><br>
+    
+            Tag of the the question:<br><br><textarea name="qTag" rows="2" cols="20" style="resize: none;" autofocus required maxlength=10></textarea><br><br>
+            Privacy of the question:<br><br>
+            <input type="radio" name="privacy" value="Public"> Public<br>
+            <input type="radio" name="privacy" value="Private" checked="checked"> Private<br><br>
+            <input type="submit" class="button" onclick="msg()" value="SUBMIT" style="position:absolute; left:780px; top:auto;z-index: 1;"><br>
+             -->
+
+        <script>
+            function msg(){
+                alert("Please wait for the online expert.......");
+            }
+        </script>
+        </div>
+        <label><input results="s" type="search" name="search1" placeholder="search for something" style="position:absolute; left:820px; top:20px;width:180px;"></label><br><br>
+    </body>
+</html>
+<script>
+    function msg4(){
+        alert("Please wait for the printer.......");
+    }
+</script>
+<script>
+    function msg1(){
+        alert("sharing .......");
+    }
+</script>
+<script>
+    function msg2(){
+        alert("There is no message so far.......");
+    }
+</script>
+<script>
+    function msg3(){
+        alert("There is no update so far.......");
+    }
+</script>
